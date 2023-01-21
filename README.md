@@ -9,3 +9,5 @@
 - trabalhando_com_socketIO: Arquivos contendo descrições de como utilizar o socket io para fazer uma comunicação em tempo real entre duas paginas web.
 
 - organizando_arquivos: Organizando arquivos seguindo as boas práticas
+
+- avancando_comunicacao: Arquivos separando a comunicação por Salas/documentos. Cada sala/documento se comunicará com ela mesmo, não havendo interferencia de outras salas/documentos.
