@@ -1,20 +1,30 @@
-//Arquivo para utilizar as variaveis de socket no frontEnd para servir o arquivo documento.html
-//Variavel para quando o cliente se conectar ao front e abrir o arquivo documento.html
-//Emitir um evento pelo cliente ao servidor
 const socket = io();
 
-/*
-Uma vez que o front-end está sendo servido no mesmo domínio e porta que o servidor 
-(http://localhost:3000), nós não precisamos passar nenhum parâmetro para io(). 
-Nesse caso, o Socket.IO deduz a URL do servidor pela URL do navegador.
+//Pegando elemento do id em text area
+//Isso guarda um elemento html em uma variavel do JS
+const textoEditor = document.getElementById("editor-texto");
 
-Mas se esse não fosse o caso, precisaríamos informar qual a URL do servidor. 
-Por exemplo, se o cliente estivesse sendo servido em http://localhost:5000, 
-e o servidor Socket.IO estivesse escutando em http://localhost:3000, precisaríamos 
-escrever o seguinte código:
+//Conceito de evento em JS
+//Keyup é quando alguem solta um tecla
+//Quando alguem soltar uma tecla, ira ocorrer o evento dentro da função
+textoEditor.addEventListener("keyup", () => {
+    //Como a alteração foi feita no FrontEnd, esse console.log não ira aparecer no terminal e sim no navegador
+    //Sempre que fizermos uma atualização no FrontEnd, precisamos atualizar a pagina para carregar as alterações
+    //console.log("Soltou tecla!")
+    //Queremos mostrar o texto que foi escrito no editor
+    //console.log(textoEditor.value)
+    //A partir de agora, posso enviar a informação para o backend
+    //Vamos emitir um evento para o backend/servidor
+    //Os parametros são: o nome do evento que quero emitir, levar junto com esse elemento algum dado
+    socket.emit("texto_editor", textoEditor.value)
+})
 
-const socket = io("http://localhost:3000")
-
-Sempre que a função io() é executada no front-end, um evento “connection” é emitido. 
-Assim, podemos escutá-lo do lado do servidor, obtendo as informações do cliente que se conectou.
-*/
+//Escutando do lado do cliente o texto proveniente do backend
+//Parametros: nome do evento vindo do backEnd, função que sera executada quando evento for escutado
+socket.on("texto_editor_clientes", (texto) => {
+    //Pegando o texto vindo do backEnd pelo parametro texto
+    //Com isso, o texto escrito em uma aba de um cliente, sera escrito no console da outra aba de outro cliente
+    //console.log(texto)
+    //Atualizando a tela do outro cliente
+    textoEditor.value = texto;
+})
