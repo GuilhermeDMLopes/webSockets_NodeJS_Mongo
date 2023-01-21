@@ -11,3 +11,5 @@
 - organizando_arquivos: Organizando arquivos seguindo as boas práticas
 
 - avancando_comunicacao: Arquivos separando a comunicação por Salas/documentos. Cada sala/documento se comunicará com ela mesmo, não havendo interferencia de outras salas/documentos.
+
+- salvandoDados_localmente: Arquivos contendo descrição de como salvar as mensagens quando atualizarmos as paginas e não as perdermos.

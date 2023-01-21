@@ -1,31 +1,75 @@
 import io from "./servidor.js"
 
+//Array de objetos em que cada objeto ira representar as informações do documento
+
+const documentos = [
+    {
+        nome: "JavaScript",
+        texto: "Texto de javascript..."
+    },
+    {
+        nome: "Node",
+        texto: "Texto de node..."
+    },
+    {
+        nome: "Socket.io",
+        texto: "Texto de socket.io..."
+    }
+]
+
 io.on("connection", (socket) => {
     console.log("Um cliente se conectou! ID: ", socket.id)
 
-    //Recebendo informação com nome da sala/documento do front
-    socket.on("selecionar_documento", (nomeDocumento) => {
-        //Sera mostrado no terminal o nome da sala/documento
-        //console.log(nomeDocumento)
-        //Vai pegar o socket conectado no momento e colocar numa sala com o nome do documento
-        //Sala agrupa clientes que estão conectados no mesmo lugar
+    /*socket.on("selecionar_documento", (nomeDocumento) => {
+        //Quando o servidor escutar o evento, ele ira retornar o documento 
+        //variavel alterada
+        const documento = encontrarDocumento(nomeDocumento)
+        //console.log(documento)       
         socket.join(nomeDocumento)
-    })
 
-    /*
-    socket.on("texto_editor", (texto, nomeDocumento) => {
-        //socket.broadcast.emit("texto_editor_clientes", texto)
-        //Vai emitir o mesmo evento emitido antes. O texto sera enviado para os clientes que estão 
-        //concetados na sala/documento de JavaScript
-        //No entanto, quem esta na sala/Documento Node, consegue enviar para quem esta em JS
-        //socket.to("JavaScript").emit("texto_editor_clientes", texto)  
-        //Agora cada sala/Documento sera escutada em sua respectiva sala/documento
-        socket.to(nomeDocumento).emit("texto_editor_clientes", texto)      
+        //Tratando erro caso ele não encontre nenhum documento
+        if(documento) {
+            //enviando documento de volta para o front end desse socket
+            socket.emit("texto_documento", documento.texto)
+        }
     })*/
 
-    //Mesma função anterior porém recebendo um objeto como parametro
-    //Pega as propriedades texto e nomeDocumento do objeto
+    //Outro método
+    socket.on("selecionar_documento", (nomeDocumento, devolverTexto) => {
+        //variavel alterada
+        const documento = encontrarDocumento(nomeDocumento)
+        //console.log(documento)       
+        socket.join(nomeDocumento)
+
+        //Tratando erro caso ele não encontre nenhum documento
+        if(documento) {
+            //enviando documento de volta para o front end desse socket
+            //um dado como qualquer outro recebido por parametro dos eventos do socket IO
+            devolverTexto(documento.texto)
+        }
+    })
+  
     socket.on("texto_editor", ({texto, nomeDocumento}) => {
-        socket.to(nomeDocumento).emit("texto_editor_clientes", texto)      
+        //Salvando as mensagens localmente
+        //pegando documento
+        const documento = encontrarDocumento(nomeDocumento)
+
+        //Se o documento existir, salva o texto
+        if(documento) {
+            documento.texto = texto
+            socket.to(nomeDocumento).emit("texto_editor_clientes", texto)
+        }
+              
     })
 })
+
+//Função para encontrar documento
+function encontrarDocumento(nome) {
+    //Variavel recebe a lsita de documentos que ciramos no inicio do arquivo
+    const documento = documentos.find((documento) => {
+        //retorna o documento que recebemos o nome como parametro
+        return documento.nome === nome;
+    });
+
+    return documento
+}
