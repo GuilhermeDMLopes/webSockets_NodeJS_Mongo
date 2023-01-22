@@ -1,9 +1,11 @@
-//Da branch avancando_comunicacao. Vamos salvar os dados localmente
+//Da branch salvandoDados_localmente. Vamos salvar os dados no MongoDB
 import express from "express";
 import url from "url";
 import path from "path";
 import http from "http";
 import { Server } from "socket.io";
+//Importando conexão com banco
+import "./dbConnect.js"
 
 
 const app = express();
@@ -21,5 +23,6 @@ const io = new Server(servidorHttp);
 export default io;
 
 /*
-Vamos enviar o texto do documento de volta para o frontend/cliente
+Iremos utilizar o MongoDB Node Driver ao invés do mongoose.
+npm install mongodb@4.11
 */

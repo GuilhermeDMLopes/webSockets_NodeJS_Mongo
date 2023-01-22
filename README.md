@@ -13,3 +13,5 @@
 - avancando_comunicacao: Arquivos separando a comunicação por Salas/documentos. Cada sala/documento se comunicará com ela mesmo, não havendo interferencia de outras salas/documentos.
 
 - salvandoDados_localmente: Arquivos contendo descrição de como salvar as mensagens quando atualizarmos as paginas e não as perdermos.
+
+- salvandoDados_MongoDB: Arquivos contendo descrição de como salvar as mensagens e documentos no MongoDB utilizando o MongoClient do Node.
