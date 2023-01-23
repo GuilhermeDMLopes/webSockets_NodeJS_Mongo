@@ -17,3 +17,5 @@
 - salvandoDados_MongoDB: Arquivos contendo descrição de como salvar as mensagens e documentos no MongoDB utilizando o MongoClient do Node.
 
 - avancandoProjeto: Arquivos contendo descrição de como inserir e deletar novas salas/documentos. Além de atualizar as páginas em tempo real para os clients.
+
+- projetoCompleto: Possui todos os arquivos do projeto, sem comentários e descrições.
