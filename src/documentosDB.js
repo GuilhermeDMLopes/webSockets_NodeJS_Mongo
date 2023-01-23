@@ -1,26 +1,36 @@
-//Arquivo de configuração e alteração do BD
 import { documentosColecao } from "./dbConnect.js"
 
+//Criando função para obter documentos
+function obterDocumentos() {
+    //Retornar um cursos em um array do JS
+    const documentos = documentosColecao.find().toArray();
+    return documentos;
+}
+
+//Função para adicionar documento
+function adicionarDocumento(nome) {
+    //Adiciona um documento com o nome passado e o texto do documento vazio
+    const resultado = documentosColecao.insertOne({
+        nome: nome,
+        texto: ""
+    });
+
+    return resultado;
+}
+
 function encontrarDocumento(nome) {
-    //Recebendo a coleção do mongo DB e encnontrar documento
     const documento = documentosColecao.findOne({
-        //encontra o documento passado como parametro
         nome: nome
-        //ou apenas: nome
     })
 
     return documento
 }
 
-//Criando função para atualizar documento com o texto digitado
 function atualizaDocumento(nome, texto) {
-    //faz a atualização do documento atual
     const atualizacao = documentosColecao.updateOne({
         nome: nome
     }, {
-        //O que deve ser feito com o documento encontrado, no MongoDB
         $set: {
-            //Troca o texto original pelo texto escrito
             texto: texto
         }
     })
@@ -28,4 +38,14 @@ function atualizaDocumento(nome, texto) {
     return atualizacao;
 }
 
-export { encontrarDocumento, atualizaDocumento }
+//Função para excluir documento
+function excluirDocumento(nome) {
+    const resultado = documentosColecao.deleteOne({
+        nome: nome
+        //Ou apenas nome
+    })
+
+    return resultado
+}
+
+export { encontrarDocumento, atualizaDocumento, obterDocumentos, adicionarDocumento, excluirDocumento }

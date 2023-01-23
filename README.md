@@ -15,3 +15,5 @@
 - salvandoDados_localmente: Arquivos contendo descrição de como salvar as mensagens quando atualizarmos as paginas e não as perdermos.
 
 - salvandoDados_MongoDB: Arquivos contendo descrição de como salvar as mensagens e documentos no MongoDB utilizando o MongoClient do Node.
+
+- avancandoProjeto: Arquivos contendo descrição de como inserir e deletar novas salas/documentos. Além de atualizar as páginas em tempo real para os clients.
